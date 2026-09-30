@@ -18,8 +18,20 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-// Serve everything in the "public" folder (our web page)
-app.use(express.static("public"));
+// Serve the web page files (index.html, client.js, style.css).
+// Normally they're in the "public" folder. If that folder is missing
+// (e.g. the files got uploaded loose), serve them from next to server.js.
+const path = require("path");
+const fs = require("fs");
+const publicDir = path.join(__dirname, "public");
+if (fs.existsSync(path.join(publicDir, "index.html"))) {
+  app.use(express.static(publicDir));
+} else {
+  for (const file of ["index.html", "client.js", "style.css"]) {
+    const route = file === "index.html" ? ["/", "/index.html"] : ["/" + file];
+    app.get(route, (req, res) => res.sendFile(path.join(__dirname, file)));
+  }
+}
 
 // ---------------- Game settings ----------------
 const MIN_PLAYERS = 3; // need at least 1 Rule Keeper + 2 guessers
