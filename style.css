@@ -1,0 +1,163 @@
+/* ------------------------------------------------------------
+   style.css — how the game looks.
+   Change the colors below to give the game your own style!
+   ------------------------------------------------------------ */
+
+:root {
+  --bg: #1b1733;
+  --card: #2a2450;
+  --card-2: #342d62;
+  --text: #f4f1ff;
+  --muted: #a9a2cf;
+  --accent: #ffcf3f;   /* yellow */
+  --accent-2: #7c6cff; /* purple */
+  --yes: #3ddc97;
+  --no: #ff6b7a;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #2e2660 0%, var(--bg) 60%);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.app { max-width: 960px; margin: 0 auto; padding: 24px 16px 48px; }
+.screen { display: flex; flex-direction: column; gap: 16px; }
+.hidden { display: none !important; }
+
+/* ---------- Text ---------- */
+.logo { font-size: 3.2rem; text-align: center; margin: 24px 0 0; letter-spacing: -1px; }
+.logo span { color: var(--accent); }
+.tagline { text-align: center; color: var(--muted); margin: 0; }
+h2 { margin: 0 0 8px; }
+.small-label { text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; color: var(--muted); margin: 0 0 6px; }
+.muted { color: var(--muted); }
+.small { font-size: 0.85rem; }
+.center { text-align: center; }
+.error { color: var(--no); min-height: 1.2em; margin: 6px 0 0; }
+.yes { color: var(--yes); }
+.no { color: var(--no); }
+
+/* ---------- Cards ---------- */
+.card { background: var(--card); border-radius: var(--radius); padding: 18px; }
+#screen-home .card, #screen-lobby .card, #screen-round, #screen-over { max-width: 480px; width: 100%; margin: 0 auto; }
+
+/* ---------- Inputs & buttons ---------- */
+label { display: block; font-weight: 600; margin: 10px 0 6px; }
+input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background: var(--card-2);
+  color: var(--text);
+  font-size: 1rem;
+  outline: none;
+}
+input:focus { border-color: var(--accent-2); }
+input:disabled { opacity: 0.5; }
+.code-input { text-transform: uppercase; letter-spacing: 6px; font-weight: 700; text-align: center; }
+
+.btn {
+  border: none;
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: var(--accent);
+  color: #241d00;
+  transition: transform 0.1s, opacity 0.2s;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+.btn.secondary { background: var(--accent-2); color: white; }
+.btn.big { width: 100%; margin-top: 14px; padding: 14px; font-size: 1.1rem; }
+.btn.small { padding: 7px 12px; font-size: 0.85rem; }
+.yes-btn { background: var(--yes); color: #04291a; }
+.no-btn { background: var(--no); color: #3a0008; }
+
+.row { display: flex; gap: 8px; }
+.row input { flex: 1; }
+
+.divider { text-align: center; color: var(--muted); margin: 18px 0 4px; font-size: 0.9rem; }
+
+.how-to summary { cursor: pointer; font-weight: 700; }
+.how-to li { margin-bottom: 8px; }
+
+/* ---------- Lobby ---------- */
+.big-code { font-size: 4rem; font-weight: 800; letter-spacing: 12px; text-align: center; color: var(--accent); margin-top: -10px; }
+.player-list { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.player-list li { background: var(--card-2); padding: 8px 14px; border-radius: 999px; }
+
+.tag { font-size: 0.7rem; background: var(--card-2); color: var(--muted); padding: 2px 8px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.5px; }
+.tag.keeper { background: var(--accent); color: #241d00; }
+.tag.off { background: #4a3d3d; }
+
+/* ---------- Game ---------- */
+.topbar { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; color: var(--muted); font-size: 0.9rem; }
+.layout { display: grid; grid-template-columns: 1fr 280px; gap: 16px; align-items: start; }
+.main-col, .side-col { display: flex; flex-direction: column; gap: 16px; }
+
+.banner { background: var(--card-2); border-radius: var(--radius); padding: 14px 18px; }
+.banner.keeper { background: linear-gradient(135deg, #5a4b00, #3d3200); border: 2px solid var(--accent); }
+.banner p { margin: 0; }
+.rule-text { font-size: 1.3rem; font-weight: 800; color: var(--accent); margin: 4px 0 6px !important; }
+
+.prompt-card h2 { font-size: 1.8rem; margin-bottom: 14px; }
+#answer-status { margin: 8px 0; }
+#next-turn-btn, #reveal-btn { margin-top: 6px; }
+
+.judge-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.judge-list li { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; background: var(--card-2); padding: 10px 12px; border-radius: 10px; }
+.judge-buttons { display: flex; gap: 6px; }
+
+.turn { margin-bottom: 16px; }
+.turn-title { font-weight: 700; margin: 0 0 6px; }
+.answers { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+.answers li { display: grid; grid-template-columns: 28px 1fr auto; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 10px; background: var(--card-2); border-left: 4px solid; }
+.answers li.yes { border-color: var(--yes); }
+.answers li.no { border-color: var(--no); }
+.answers .mark { font-weight: 800; font-size: 1.1rem; }
+.answers li.yes .mark { color: var(--yes); }
+.answers li.no .mark { color: var(--no); }
+.answers .answer { font-weight: 600; color: var(--text); }
+.answers .who { color: var(--muted); font-size: 0.85rem; }
+
+.scoreboard { list-style: none; padding: 0; margin: 0; }
+.scoreboard li { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--card-2); }
+.scoreboard li:last-child { border-bottom: none; }
+.scoreboard b { color: var(--accent); font-size: 1.1rem; }
+.faded { opacity: 0.5; }
+
+.guess-feed { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 0.9rem; }
+.guess-feed em { font-style: normal; font-weight: 700; }
+.guess-feed .wrong em { color: var(--no); }
+.guess-feed .correct em { color: var(--yes); }
+.guess-feed .pending em { color: var(--muted); }
+
+/* ---------- Round over / Game over ---------- */
+#round-title { text-align: center; margin-top: 16px; }
+.rule-reveal { font-size: 1.5rem; font-weight: 800; color: var(--accent); margin: 4px 0 12px; }
+.final-scores { margin: 0; padding-left: 24px; }
+.final-scores li { padding: 8px 0; font-size: 1.15rem; }
+.final-scores li span { display: inline-block; min-width: 70%; }
+.final-scores li:first-child { color: var(--accent); font-weight: 800; }
+
+/* ---------- Phones ---------- */
+@media (max-width: 720px) {
+  .layout { grid-template-columns: 1fr; }
+  .logo { font-size: 2.6rem; }
+  .big-code { font-size: 3rem; }
+  .prompt-card h2 { font-size: 1.5rem; }
+  .answers li { grid-template-columns: 24px 1fr; }
+  .answers .who { grid-column: 2; }
+}

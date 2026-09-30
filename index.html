@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fake Rule</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+
+    <!-- ============ HOME SCREEN ============ -->
+    <section id="screen-home" class="screen">
+      <h1 class="logo">Fake <span>Rule</span></h1>
+      <p class="tagline">One player knows the secret rule. Can you crack it?</p>
+
+      <div class="card">
+        <label for="name-input">Your name</label>
+        <input id="name-input" maxlength="16" placeholder="e.g. Matthew" autocomplete="off" />
+
+        <button id="create-btn" class="btn big">Create a room</button>
+
+        <div class="divider"><span>or join a friend</span></div>
+
+        <label for="code-input">Room code</label>
+        <input id="code-input" maxlength="4" placeholder="ABCD" autocomplete="off" class="code-input" />
+        <button id="join-btn" class="btn big secondary">Join room</button>
+
+        <p id="home-error" class="error"></p>
+      </div>
+
+      <details class="card how-to">
+        <summary>How to play</summary>
+        <ol>
+          <li>Each round, one player is the <b>Rule Keeper</b> and gets a secret rule, like
+            <i>"the answer has exactly 5 letters."</i></li>
+          <li>Everyone gets a prompt, like <i>"Name an animal,"</i> and types an answer.
+            The Rule Keeper's answer always follows the rule.</li>
+          <li>Answers are revealed with a <span class="yes">✓</span> if they follow the rule or an
+            <span class="no">✗</span> if they don't.</li>
+          <li>Think you know the rule? Type a guess (one per prompt). The Rule Keeper decides if you're right.</li>
+          <li><b>Scoring:</b> +1 for each answer that follows the rule, +5 for cracking it.
+            If nobody cracks it in 5 prompts, the Rule Keeper gets +4.</li>
+        </ol>
+      </details>
+    </section>
+
+    <!-- ============ LOBBY ============ -->
+    <section id="screen-lobby" class="screen hidden">
+      <p class="small-label center">Room code</p>
+      <div id="lobby-code" class="big-code">----</div>
+      <p class="tagline">Tell your friends to open this site and enter the code.</p>
+
+      <div class="card">
+        <h2>Players</h2>
+        <ul id="lobby-players" class="player-list"></ul>
+        <button id="start-btn" class="btn big">Start game</button>
+        <p id="lobby-status" class="muted center"></p>
+      </div>
+    </section>
+
+    <!-- ============ GAME ============ -->
+    <section id="screen-game" class="screen hidden">
+      <div class="topbar">
+        <span>Room <b id="game-code"></b></span>
+        <span id="round-info"></span>
+        <span id="turn-info"></span>
+      </div>
+
+      <div class="layout">
+        <div class="main-col">
+          <!-- Who knows the rule -->
+          <div id="keeper-banner" class="banner"></div>
+
+          <!-- The prompt -->
+          <div class="card prompt-card">
+            <p class="small-label">Prompt</p>
+            <h2 id="prompt-text"></h2>
+
+            <div id="answer-area">
+              <div class="row">
+                <input id="answer-input" maxlength="40" placeholder="Your answer" autocomplete="off" />
+                <button id="answer-btn" class="btn">Submit</button>
+              </div>
+              <p id="answer-error" class="error"></p>
+            </div>
+
+            <p id="answer-status" class="muted"></p>
+            <button id="reveal-btn" class="btn small secondary hidden">Reveal answers now</button>
+            <button id="next-turn-btn" class="btn hidden">Next prompt</button>
+            <p id="next-turn-note" class="muted small hidden">Judge all guesses before moving on.</p>
+          </div>
+
+          <!-- Guess the rule (guessers only) -->
+          <div id="guess-area" class="card hidden">
+            <p class="small-label">Think you know the rule?</p>
+            <div class="row">
+              <input id="guess-input" maxlength="80" placeholder="e.g. Words that start with S" autocomplete="off" />
+              <button id="guess-btn" class="btn secondary">Guess</button>
+            </div>
+            <p id="guess-error" class="error"></p>
+          </div>
+
+          <!-- Guesses waiting for the Rule Keeper to judge -->
+          <div id="judge-area" class="card hidden">
+            <p class="small-label">Judge these guesses</p>
+            <ul id="judge-list" class="judge-list"></ul>
+          </div>
+
+          <!-- Answers so far this round -->
+          <div class="card">
+            <p class="small-label">Answers this round</p>
+            <div id="history"></div>
+          </div>
+        </div>
+
+        <aside class="side-col">
+          <div class="card">
+            <p class="small-label">Scores</p>
+            <ul id="scoreboard" class="scoreboard"></ul>
+          </div>
+          <div class="card">
+            <p class="small-label">Guesses</p>
+            <ul id="guess-feed" class="guess-feed"></ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============ ROUND OVER ============ -->
+    <section id="screen-round" class="screen hidden">
+      <h2 id="round-title"></h2>
+      <div class="card center">
+        <p class="small-label">The secret rule was</p>
+        <p id="round-rule" class="rule-reveal"></p>
+        <p id="round-result"></p>
+      </div>
+      <div class="card">
+        <p class="small-label">Scores</p>
+        <ul id="round-scores" class="scoreboard"></ul>
+      </div>
+      <button id="next-round-btn" class="btn big">Next round</button>
+      <p id="round-wait" class="muted center"></p>
+    </section>
+
+    <!-- ============ GAME OVER ============ -->
+    <section id="screen-over" class="screen hidden">
+      <h1 class="logo">Game <span>over!</span></h1>
+      <p id="winner-text" class="tagline"></p>
+      <div class="card">
+        <ol id="final-scores" class="final-scores"></ol>
+      </div>
+      <button id="again-btn" class="btn big">Play again</button>
+      <p id="over-wait" class="muted center"></p>
+    </section>
+
+  </main>
+
+  <!-- Socket.IO's browser code is served automatically by our server -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="client.js"></script>
+</body>
+</html>
